@@ -27,7 +27,7 @@ class Step extends _$Step {
   StepState build() => const StepState();
 
   ///
-  Future<void> getAllStep() async {
+  Future<void> getAllSteps() async {
     final HttpClient client = ref.read(httpClientProvider);
 
     // ignore: always_specify_types
@@ -47,7 +47,7 @@ class Step extends _$Step {
       }
 
       state = state.copyWith(stepList: list, stepMap: map);
-    // ignore: always_specify_types
+      // ignore: always_specify_types
     }).catchError((error, _) {
       utility.showError('予期せぬエラーが発生しました');
     });
