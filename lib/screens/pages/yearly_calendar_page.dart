@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
+import '../../controllers/year_step/year_step.dart';
 import '../../extensions/extensions.dart';
 import '../../models/step_model.dart';
 
 class YearlyCalendarPage extends ConsumerStatefulWidget {
-  const YearlyCalendarPage({super.key, required this.date, required this.stepMap});
+  const YearlyCalendarPage({super.key, required this.date});
 
   final DateTime date;
-  final Map<String, StepModel> stepMap;
 
   @override
   ConsumerState<YearlyCalendarPage> createState() => _YearlyCalendarPageState();
@@ -38,12 +38,11 @@ class _YearlyCalendarPageState extends ConsumerState<YearlyCalendarPage> {
         final int diffDays = DateTime.now().difference(DateTime(DateTime.now().year)).inDays;
         final int index = (diffDays / 7).floor();
 
-        final BuildContext target = globalKeyList[index].currentContext!;
+        if (globalKeyList[index].currentContext != null) {
+          final BuildContext target = globalKeyList[index].currentContext!;
 
-        await Scrollable.ensureVisible(
-          target,
-          duration: const Duration(milliseconds: 1000),
-        );
+          await Scrollable.ensureVisible(target, duration: const Duration(milliseconds: 1000));
+        }
       }
     });
 
@@ -63,6 +62,12 @@ class _YearlyCalendarPageState extends ConsumerState<YearlyCalendarPage> {
             children: <Widget>[
               const SizedBox(height: 20),
               Container(width: context.screenSize.width),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[Text(widget.date.yyyy), Container()],
+              ),
+              Divider(color: Colors.white.withOpacity(0.3), thickness: 5),
+              const SizedBox(height: 10),
               Expanded(child: _getCalendar()),
               const SizedBox(height: 10),
             ],
@@ -74,41 +79,49 @@ class _YearlyCalendarPageState extends ConsumerState<YearlyCalendarPage> {
 
   ///
   Widget _getCalendar() {
-    yearFirst = DateTime(widget.date.yyyy.toInt());
+    return ref.watch(yearStepProvider(year: widget.date.year)).when(
+          data: (YearStepState value) {
+            final Map<String, StepModel> stepMap = value.stepMap;
 
-    final DateTime yearEnd = DateTime(yearFirst.year + 1, 1, 0);
+            yearFirst = DateTime(widget.date.yyyy.toInt());
 
-    final int diff = yearEnd.difference(yearFirst).inDays;
-    final int yearDaysNum = diff + 1;
+            final DateTime yearEnd = DateTime(yearFirst.year + 1, 1, 0);
 
-    final String youbi = yearFirst.youbiStr;
-    final int youbiNum = youbiList.indexWhere((String element) => element == youbi);
+            final int diff = yearEnd.difference(yearFirst).inDays;
+            final int yearDaysNum = diff + 1;
 
-    final int weekNum = ((yearDaysNum + youbiNum) / 7).ceil();
+            final String youbi = yearFirst.youbiStr;
+            final int youbiNum = youbiList.indexWhere((String element) => element == youbi);
 
-    // ignore: always_specify_types
-    days = List.generate(weekNum * 7, (int index) => '');
+            final int weekNum = ((yearDaysNum + youbiNum) / 7).ceil();
 
-    for (int i = 0; i < (weekNum * 7); i++) {
-      if (i >= youbiNum) {
-        final DateTime gendate = yearFirst.add(Duration(days: i - youbiNum));
+            // ignore: always_specify_types
+            days = List.generate(weekNum * 7, (int index) => '');
 
-        if (yearFirst.year == gendate.year) {
-          days[i] = gendate.mmdd;
-        }
-      }
-    }
+            for (int i = 0; i < (weekNum * 7); i++) {
+              if (i >= youbiNum) {
+                final DateTime gendate = yearFirst.add(Duration(days: i - youbiNum));
 
-    final List<Widget> list = <Widget>[];
-    for (int i = 0; i < weekNum; i++) {
-      list.add(_getRow(days: days, rowNum: i));
-    }
+                if (yearFirst.year == gendate.year) {
+                  days[i] = gendate.mmdd;
+                }
+              }
+            }
 
-    return SingleChildScrollView(child: Column(children: list));
+            final List<Widget> list = <Widget>[];
+            for (int i = 0; i < weekNum; i++) {
+              list.add(_getRow(days: days, rowNum: i, stepMap: stepMap));
+            }
+
+            return SingleChildScrollView(child: Column(children: list));
+          },
+          error: (Object error, StackTrace stackTrace) => Container(),
+          loading: () => const Center(child: CircularProgressIndicator()),
+        );
   }
 
   ///
-  Widget _getRow({required List<String> days, required int rowNum}) {
+  Widget _getRow({required List<String> days, required int rowNum, required Map<String, StepModel> stepMap}) {
     final List<Widget> list = <Widget>[];
 
     for (int i = rowNum * 7; i < ((rowNum + 1) * 7); i++) {
@@ -151,8 +164,8 @@ class _YearlyCalendarPageState extends ConsumerState<YearlyCalendarPage> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: <Widget>[
                             Container(),
-                            Text((widget.stepMap['${widget.date.year}-${days[i]}'] != null)
-                                ? widget.stepMap['${widget.date.year}-${days[i]}']!.step.toString()
+                            Text((stepMap['${widget.date.year}-${days[i]}'] != null)
+                                ? stepMap['${widget.date.year}-${days[i]}']!.step.toString()
                                 : ''),
                           ],
                         ),
@@ -160,17 +173,14 @@ class _YearlyCalendarPageState extends ConsumerState<YearlyCalendarPage> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: <Widget>[
                             Container(),
-                            Text((widget.stepMap['${widget.date.year}-${days[i]}'] != null)
-                                ? widget.stepMap['${widget.date.year}-${days[i]}']!.distance.toString()
+                            Text((stepMap['${widget.date.year}-${days[i]}'] != null)
+                                ? stepMap['${widget.date.year}-${days[i]}']!.distance.toString()
                                 : ''),
                           ],
                         ),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: <Widget>[
-                            _dispRowNum(mmdd: days[i], rowNum: rowNum),
-                            Container(),
-                          ],
+                          children: <Widget>[_dispRowNum(mmdd: days[i], rowNum: rowNum), Container()],
                         ),
                       ],
                     ),
@@ -180,11 +190,7 @@ class _YearlyCalendarPageState extends ConsumerState<YearlyCalendarPage> {
       );
     }
 
-    return Row(
-      key: globalKeyList[rowNum],
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: list,
-    );
+    return Row(key: globalKeyList[rowNum], crossAxisAlignment: CrossAxisAlignment.start, children: list);
   }
 
   ///

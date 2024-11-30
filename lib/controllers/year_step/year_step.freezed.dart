@@ -3,7 +3,7 @@
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
-part of 'step.dart';
+part of 'year_step.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -15,36 +15,37 @@ final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 /// @nodoc
-mixin _$StepState {
+mixin _$YearStepState {
   List<StepModel> get stepList => throw _privateConstructorUsedError;
   Map<String, StepModel> get stepMap => throw _privateConstructorUsedError;
 
-  /// Create a copy of StepState
+  /// Create a copy of YearStepState
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
-  $StepStateCopyWith<StepState> get copyWith =>
+  $YearStepStateCopyWith<YearStepState> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $StepStateCopyWith<$Res> {
-  factory $StepStateCopyWith(StepState value, $Res Function(StepState) then) =
-      _$StepStateCopyWithImpl<$Res, StepState>;
+abstract class $YearStepStateCopyWith<$Res> {
+  factory $YearStepStateCopyWith(
+          YearStepState value, $Res Function(YearStepState) then) =
+      _$YearStepStateCopyWithImpl<$Res, YearStepState>;
   @useResult
   $Res call({List<StepModel> stepList, Map<String, StepModel> stepMap});
 }
 
 /// @nodoc
-class _$StepStateCopyWithImpl<$Res, $Val extends StepState>
-    implements $StepStateCopyWith<$Res> {
-  _$StepStateCopyWithImpl(this._value, this._then);
+class _$YearStepStateCopyWithImpl<$Res, $Val extends YearStepState>
+    implements $YearStepStateCopyWith<$Res> {
+  _$YearStepStateCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
   final $Val _value;
   // ignore: unused_field
   final $Res Function($Val) _then;
 
-  /// Create a copy of StepState
+  /// Create a copy of YearStepState
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
@@ -66,25 +67,25 @@ class _$StepStateCopyWithImpl<$Res, $Val extends StepState>
 }
 
 /// @nodoc
-abstract class _$$StepStateImplCopyWith<$Res>
-    implements $StepStateCopyWith<$Res> {
-  factory _$$StepStateImplCopyWith(
-          _$StepStateImpl value, $Res Function(_$StepStateImpl) then) =
-      __$$StepStateImplCopyWithImpl<$Res>;
+abstract class _$$YearStepStateImplCopyWith<$Res>
+    implements $YearStepStateCopyWith<$Res> {
+  factory _$$YearStepStateImplCopyWith(
+          _$YearStepStateImpl value, $Res Function(_$YearStepStateImpl) then) =
+      __$$YearStepStateImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call({List<StepModel> stepList, Map<String, StepModel> stepMap});
 }
 
 /// @nodoc
-class __$$StepStateImplCopyWithImpl<$Res>
-    extends _$StepStateCopyWithImpl<$Res, _$StepStateImpl>
-    implements _$$StepStateImplCopyWith<$Res> {
-  __$$StepStateImplCopyWithImpl(
-      _$StepStateImpl _value, $Res Function(_$StepStateImpl) _then)
+class __$$YearStepStateImplCopyWithImpl<$Res>
+    extends _$YearStepStateCopyWithImpl<$Res, _$YearStepStateImpl>
+    implements _$$YearStepStateImplCopyWith<$Res> {
+  __$$YearStepStateImplCopyWithImpl(
+      _$YearStepStateImpl _value, $Res Function(_$YearStepStateImpl) _then)
       : super(_value, _then);
 
-  /// Create a copy of StepState
+  /// Create a copy of YearStepState
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
@@ -92,7 +93,7 @@ class __$$StepStateImplCopyWithImpl<$Res>
     Object? stepList = null,
     Object? stepMap = null,
   }) {
-    return _then(_$StepStateImpl(
+    return _then(_$YearStepStateImpl(
       stepList: null == stepList
           ? _value._stepList
           : stepList // ignore: cast_nullable_to_non_nullable
@@ -107,8 +108,8 @@ class __$$StepStateImplCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$StepStateImpl implements _StepState {
-  const _$StepStateImpl(
+class _$YearStepStateImpl implements _YearStepState {
+  const _$YearStepStateImpl(
       {final List<StepModel> stepList = const <StepModel>[],
       final Map<String, StepModel> stepMap = const <String, StepModel>{}})
       : _stepList = stepList,
@@ -134,14 +135,14 @@ class _$StepStateImpl implements _StepState {
 
   @override
   String toString() {
-    return 'StepState(stepList: $stepList, stepMap: $stepMap)';
+    return 'YearStepState(stepList: $stepList, stepMap: $stepMap)';
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$StepStateImpl &&
+            other is _$YearStepStateImpl &&
             const DeepCollectionEquality().equals(other._stepList, _stepList) &&
             const DeepCollectionEquality().equals(other._stepMap, _stepMap));
   }
@@ -152,29 +153,29 @@ class _$StepStateImpl implements _StepState {
       const DeepCollectionEquality().hash(_stepList),
       const DeepCollectionEquality().hash(_stepMap));
 
-  /// Create a copy of StepState
+  /// Create a copy of YearStepState
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
-  _$$StepStateImplCopyWith<_$StepStateImpl> get copyWith =>
-      __$$StepStateImplCopyWithImpl<_$StepStateImpl>(this, _$identity);
+  _$$YearStepStateImplCopyWith<_$YearStepStateImpl> get copyWith =>
+      __$$YearStepStateImplCopyWithImpl<_$YearStepStateImpl>(this, _$identity);
 }
 
-abstract class _StepState implements StepState {
-  const factory _StepState(
+abstract class _YearStepState implements YearStepState {
+  const factory _YearStepState(
       {final List<StepModel> stepList,
-      final Map<String, StepModel> stepMap}) = _$StepStateImpl;
+      final Map<String, StepModel> stepMap}) = _$YearStepStateImpl;
 
   @override
   List<StepModel> get stepList;
   @override
   Map<String, StepModel> get stepMap;
 
-  /// Create a copy of StepState
+  /// Create a copy of YearStepState
   /// with the given fields replaced by the non-null parameter values.
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$StepStateImplCopyWith<_$StepStateImpl> get copyWith =>
+  _$$YearStepStateImplCopyWith<_$YearStepStateImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
